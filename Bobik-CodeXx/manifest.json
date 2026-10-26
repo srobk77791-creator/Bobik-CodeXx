@@ -1,0 +1,45 @@
+{
+  "manifest_version": 3,
+  "name": "Bobik code",
+  "version": "1.8.0",
+  "description": "Мини-чат с ИИ прямо в браузере. Вставь API-ключ — и общайся.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_title": "Bobik code",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  },
+  "permissions": [
+    "storage",
+    "sidePanel",
+    "declarativeNetRequest"
+  ],
+  "host_permissions": [
+    "https://api.anthropic.com/*",
+    "https://api.openai.com/*",
+    "https://generativelanguage.googleapis.com/*",
+    "https://openrouter.ai/*",
+    "https://html.duckduckgo.com/*",
+    "https://www.cbr-xml-daily.ru/*",
+    "https://ru.wikipedia.org/*",
+    "https://lite.duckduckgo.com/*",
+    "https://www.bing.com/*",
+    "https://*/*",
+    "http://*/*",
+    "https://api.tavily.com/*",
+    "https://google.serper.dev/*",
+    "https://www.mojeek.com/*"
+  ]
+}

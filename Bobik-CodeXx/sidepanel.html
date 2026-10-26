@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bobik code</title>
+  <link rel="stylesheet" href="sidepanel.css">
+</head>
+<body>
+  <header class="top">
+    <div class="brand"><span class="logo">&lt;/&gt;</span><span class="name">Bobik code</span><span id="modelBadge" class="badge"></span></div>
+    <div class="actions"><button id="donateBtn" class="ghost heart" title="Поддержать автора">❤️</button><button id="clearBtn" class="ghost" title="Очистить чат">Очистить</button></div>
+  </header>
+
+  <main>
+    <!-- ЧАТ -->
+    <section id="view-chat" class="view active">
+      <div id="notice" class="notice hidden">
+        Сначала вставь API-ключ в настройках.
+        <button id="goSettings" class="link">Открыть настройки</button>
+      </div>
+      <div id="messages" class="messages"></div>
+      <div class="composer-wrap">
+        <div id="attachErr" class="attach-err"></div>
+        <div id="attachBar" class="attachbar hidden"></div>
+        <div class="composer">
+          <button id="attachBtn" class="attach" type="button" title="Прикрепить файл (текст, код, картинка, PDF)">📎</button>
+          <input id="fileInput" type="file" multiple hidden>
+          <button id="webBtn" class="attach on" type="button" title="Поиск в интернете: включён"><span>🌐</span></button>
+          <textarea id="input" rows="1" placeholder="Напиши сообщение…" title="Enter — отправить, Shift+Enter — новая строка"></textarea>
+          <button id="sendBtn" class="send" title="Отправить">➤</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- НАСТРОЙКИ -->
+    <section id="view-settings" class="view">
+      <h2>Подключение ИИ</h2>
+      <label>API-ключ
+        <div class="row">
+          <input id="apiKey" type="password" placeholder="Вставь свой API-ключ" autocomplete="off" spellcheck="false">
+          <button id="toggleKey" class="ghost" type="button">👁</button>
+        </div>
+      </label>
+      <p class="hint tight">Просто вставь ключ и нажми «Сохранить». Провайдер и модель определятся сами (Claude, ChatGPT, Gemini, OpenRouter).</p>
+      <button id="saveBtn" class="primary">Сохранить</button>
+      <p id="saveStatus" class="status"></p>
+
+      <details class="adv">
+        <summary>Дополнительно (необязательно)</summary>
+        <label>Провайдер
+          <select id="provider"></select>
+        </label>
+        <div class="row spaced">
+          <button id="loadModels" class="ghost" type="button">🔄 Загрузить модели</button>
+          <span id="modelsStatus" class="small"></span>
+        </div>
+        <label>Модель (пусто = подберу сам)
+          <input id="model" type="text" list="modelsList" placeholder="Автоматически" spellcheck="false" autocomplete="off">
+          <datalist id="modelsList"></datalist>
+        </label>
+        <label class="chk"><input id="deep" type="checkbox" checked> <span>📖 Читать найденные страницы целиком (ответы лучше, но дольше)</span></label>
+        <label>Ключ поиска — Tavily или Serper (необязательно, оба бесплатны)
+          <input id="tavily" type="password" placeholder="tvly-… (Tavily) или ключ Serper" autocomplete="off" spellcheck="false">
+        </label>
+        <div class="row spaced"><button id="testSearch" class="ghost" type="button">🔎 Проверить поиск</button></div>
+        <pre id="searchTest" class="testout"></pre>
+        <label>Как назвать ИИ в чате (любое имя)
+          <input id="alias" type="text" placeholder="Например: Бобик, Мой Кодер">
+        </label>
+        <label>Системная инструкция
+          <textarea id="system" rows="3"></textarea>
+        </label>
+      </details>
+
+      <p class="hint">🔒 Ключ хранится только в твоём браузере (chrome.storage) и отправляется только провайдеру ИИ.</p>
+    </section>
+
+    <!-- ДРУГИЕ РАСШИРЕНИЯ -->
+    <section id="view-more" class="view">
+      <h2>Другие расширения</h2>
+      <div class="soon">
+        <div class="soon-emoji">🚀</div>
+        <div class="soon-title">Coming Soon!</div>
+        <p>Скоро здесь появятся другие расширения Bobik для Google Chrome.</p>
+      </div>
+    </section>
+  </main>
+
+  <nav class="tabs">
+    <button class="tab active" data-view="chat"><span class="ti">💬</span><span>Чат</span></button>
+    <button class="tab" data-view="settings"><span class="ti">⚙️</span><span>Настройки</span></button>
+    <button class="tab" data-view="more"><span class="ti">🧩</span><span>Другие расширения</span></button>
+  </nav>
+
+  <div id="donate" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="donateTitle">
+    <div class="sheet">
+      <button id="donateClose" class="sheet-x" type="button" title="Закрыть">×</button>
+      <div class="d-emoji">❤️</div>
+      <h3 id="donateTitle">Поддержать Bobik</h3>
+      <p class="hint center">Расширение бесплатное. Если оно тебе помогает — можешь отправить автору любую из сумм. Спасибо!</p>
+      <div id="amounts" class="amounts"></div>
+      <div class="payline">
+        <div class="lbl">Перевод по номеру телефона</div>
+        <div class="num" id="phoneNum"></div>
+        <div class="lbl">Банк получателя: <b>Ozon Банк</b> или карта <b>«Мир»</b></div>
+      </div>
+      <div class="d-row">
+        <button id="copyPhone" class="primary" type="button">Скопировать номер</button>
+        <button id="copyAmount" class="ghost" type="button">Скопировать сумму</button>
+      </div>
+      <ol class="steps">
+        <li>Открой приложение своего банка → «Перевод по номеру телефона» (СБП).</li>
+        <li>Вставь номер и сумму.</li>
+        <li>Выбери банк получателя — Ozon Банк.</li>
+      </ol>
+    </div>
+  </div>
+
+  <script src="sidepanel.js"></script>
+</body>
+</html>
